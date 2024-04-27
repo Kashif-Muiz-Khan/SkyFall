@@ -8,4 +8,20 @@
         public bool Status { get; set; }
         public string ToDoListText { get; set; }
     }
+
+    public enum ToDoListStatus
+    {
+        None,
+        Started,
+        Halfway,
+        Finished,
+    }
+
+    public enum ToDoListPriority
+    {
+        None,
+        Low,
+        High,
+        Urgent,
+    }
 }
