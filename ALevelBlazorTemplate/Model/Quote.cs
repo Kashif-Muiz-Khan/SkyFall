@@ -4,6 +4,6 @@
     {
         public int QuoteID { get; set; }
         public string QuoteText { get; set; }
-        public Author AuthorID { get; set; }
+        public Author Author { get; set; }
     }
 }

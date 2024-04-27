@@ -12,8 +12,8 @@ namespace SkyFall.Model
         public string Occupation { get; set; }
         public string Country { get; set; }
 
-        //public List<Book> Books { get; set; } = [];
-        //public List<Quote> Quotes { get; set; } = [];
+        public List<Book> BooksAuthored { get; set; } = [];
+        public List<Quote> Quotes { get; set; } = [];
     }
 }
 

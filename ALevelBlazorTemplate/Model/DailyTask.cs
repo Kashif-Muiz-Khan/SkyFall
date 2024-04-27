@@ -2,8 +2,8 @@
 {
     public class DailyTask
     {
-        public int TaskID { get; set; }
-        public int UserID { get; set; }
+        public int DailyTaskID { get; set; }
+        public User User { get; set; }
         public string Type { get; set; }
         public string TaskDescription { get; set; }
         public DateTime Created { get; set; }
