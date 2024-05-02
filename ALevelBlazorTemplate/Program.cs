@@ -7,6 +7,13 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddScoped<DatabaseSeeder>();
+builder.Services.AddScoped<QuoteProvider>();
+
+
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -25,8 +32,6 @@ builder.Services.AddAuthentication(options =>
 
 
 
-builder.Services.AddDbContext<DatabaseContext>();
-builder.Services.AddScoped<DatabaseSeeder>();
 
 
 builder.Services.AddIdentityCore<User>()
