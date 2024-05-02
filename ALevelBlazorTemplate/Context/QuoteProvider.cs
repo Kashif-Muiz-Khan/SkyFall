@@ -14,7 +14,7 @@ namespace SkyFall.Context
 
         public async Task<List<Quote>> GetAllQuotesAsync()
         {
-            return await _context.Quotes.OrderBy(quote => quote.Author).ToListAsync();
+            return await _context.Quotes.OrderBy(quote => quote.QuoteID).ToListAsync();
         }
 
         public async Task AddQuoteAsync(Quote quote)
@@ -23,7 +23,7 @@ namespace SkyFall.Context
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateCheeseAsync(Quote quote)
+        public async Task UpdateQuoteAsync(Quote quote)
         {
             _context.Quotes.Update(quote);
             await _context.SaveChangesAsync();

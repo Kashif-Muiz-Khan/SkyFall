@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddScoped<DatabaseSeeder>();
 builder.Services.AddScoped<QuoteProvider>();
+builder.Services.AddScoped<AuthorProvider>();
 
 
 

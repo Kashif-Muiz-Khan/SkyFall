@@ -6,8 +6,8 @@ namespace SkyFall.Model
     {
         public int AuthorID { get; set; }
         public string Name { get; set; }
-        public DateTime BirthDate { get; set; }
-        public DateTime DeathDate { get; set; }
+        public string BirthDate { get; set; }
+        public string DeathDate { get; set; }
         public string Lifespan { get; set; }
         public string Occupation { get; set; }
         public string Country { get; set; }

@@ -62,8 +62,8 @@ namespace SkyFall.Migrations
                     AuthorID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DeathDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    BirthDate = table.Column<string>(type: "TEXT", nullable: false),
+                    DeathDate = table.Column<string>(type: "TEXT", nullable: false),
                     Lifespan = table.Column<string>(type: "TEXT", nullable: false),
                     Occupation = table.Column<string>(type: "TEXT", nullable: false),
                     Country = table.Column<string>(type: "TEXT", nullable: false)

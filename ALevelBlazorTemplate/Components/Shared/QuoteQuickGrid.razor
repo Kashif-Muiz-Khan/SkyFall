@@ -64,10 +64,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await GetCheeses();
+        await GetQuotes();
     }
 
-    private async Task GetCheeses()
+    private async Task GetQuotes()
     {
         Quotes = (await QuoteProvider.GetAllQuotesAsync()).AsQueryable();
         model = new Quote();
