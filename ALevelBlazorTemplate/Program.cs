@@ -12,6 +12,7 @@ builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddScoped<DatabaseSeeder>();
 builder.Services.AddScoped<QuoteProvider>();
 builder.Services.AddScoped<AuthorProvider>();
+builder.Services.AddScoped<BookProvider>();
 
 
 
