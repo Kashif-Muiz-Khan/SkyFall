@@ -1,0 +1,85 @@
+﻿
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using SkyFall.Context
+@using SkyFall.Model
+@inject QuoteProvider QuoteProvider
+@inject NavigationManager NavigationManager
+
+<h3>Quote QuickGrid</h3>
+
+@if (Quotes == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div>
+        <QuickGrid Theme="bootstrap" Class="table" Items="@FilteredQuotes" Pagination="@pagination">
+            <PropertyColumn Property="@(c => c.QuoteID)" Sortable="true" />
+            <PropertyColumn Property="@(c => c.QuoteText)" Sortable="true">
+                <ColumnOptions>
+                    <div class="search-box">
+                        <input type="search" autofocus @bind="nameSearch" @bind:event="oninput" placeholder="Quote Text..." />
+                    </div>
+                </ColumnOptions>
+            </PropertyColumn>
+@*             <PropertyColumn Property="@(c => c.Author.Name)" Sortable="true" />
+            <PropertyColumn Property="@(c => c.Author.Occupation)" Sortable="true" />
+            <PropertyColumn Property="@(c => c.Author.Country)" Sortable="true" />
+            <PropertyColumn Property="@(c => c.Author.Lifespan)" Sortable="true" /> *@
+        </QuickGrid>
+        <Paginator State="@pagination" />
+    </div>
+}
+
+
+
+
+
+
+
+
+
+@code {
+    private EditContext editContext;
+    private Quote model;
+    private IQueryable<Quote>? quotes;
+    private PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+    private string nameSearch;
+
+    public IQueryable<Quote>? Quotes { get; set; }
+
+    private IQueryable<Quote>? FilteredQuotes
+    {
+        get
+        {
+            IQueryable<Quote>? filtered = Quotes;
+            if (!string.IsNullOrEmpty(nameSearch))
+            {
+                filtered = filtered?.Where(c => c.QuoteText.Contains(nameSearch, StringComparison.CurrentCultureIgnoreCase));
+            }
+            return filtered;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetQuotes();
+    }
+
+    private async Task GetQuotes()
+    {
+        Quotes = (await QuoteProvider.GetAllQuotesAsync()).AsQueryable();
+        model = new Quote();
+        editContext = new EditContext(model);
+    }
+
+
+
+ 
+
+
+
+
+
+}

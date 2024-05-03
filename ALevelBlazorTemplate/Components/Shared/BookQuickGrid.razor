@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Components.QuickGrid
+@using SkyFall.Context
+@using SkyFall.Model
+@inject BookProvider BookProvider
+@inject NavigationManager NavigationManager
+
+<h3>Book QuickGrid</h3>
+
+@if (Books == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div>
+        <QuickGrid Theme="bootstrap" Class="table" Items="@FilteredBooks" Pagination="@pagination">
+            <PropertyColumn Property="@(c => c.BookID)" Sortable="true" />
+            <PropertyColumn Property="@(c => c.Title)" Sortable="true">
+                <ColumnOptions>
+                    <div class="search-box">
+                        <input type="search" autofocus @bind="nameSearch" @bind:event="oninput" placeholder="Book Name..." />
+                    </div>
+                </ColumnOptions>
+            </PropertyColumn>
+            <PropertyColumn Property="@(c => c.Description)" Sortable="true" />
+            <PropertyColumn Property="@(c => c.Genre)" Sortable="true" />
+            <PropertyColumn Property="@(c => c.Pages)" Sortable="true" />
+            <PropertyColumn Property="@(c => c.Price)" Sortable="true" />
+        </QuickGrid>
+        <Paginator State="@pagination" />
+    </div>
+}
+
+
+
+
+
+
+
+
+
+@code {
+    private EditContext editContext;
+    private Book model;
+    private IQueryable<Book>? books;
+    private PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+    private string nameSearch;
+
+    public IQueryable<Book>? Books { get; set; }
+
+    private IQueryable<Book>? FilteredBooks
+    {
+        get
+        {
+            IQueryable<Book>? filtered = Books;
+            if (!string.IsNullOrEmpty(nameSearch))
+            {
+                filtered = filtered?.Where(c => c.Title.Contains(nameSearch, StringComparison.CurrentCultureIgnoreCase));
+            }
+            return filtered;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetBooks();
+    }
+
+    private async Task GetBooks()
+    {
+        Books = (await BookProvider.GetAllBooksAsync()).AsQueryable();
+        model = new Book();
+        editContext = new EditContext(model);
+    }
+
+
+
+
+
+
+
+
+
+}

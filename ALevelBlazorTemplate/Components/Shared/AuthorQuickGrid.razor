@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Components.QuickGrid
+@using SkyFall.Context
+@using SkyFall.Model
+@inject AuthorProvider AuthorProvider
+@inject NavigationManager NavigationManager
+
+<h3>Author QuickGrid</h3>
+
+@if (Authors == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div>
+        <QuickGrid Theme="bootstrap" Class="table" Items="@FilteredAuthors" Pagination="@pagination">
+            <PropertyColumn Property="@(c => c.AuthorID)" Sortable="true" />
+            <PropertyColumn Property="@(c => c.Name)" Sortable="true">
+                <ColumnOptions>
+                    <div class="search-box">
+                        <input type="search" autofocus @bind="nameSearch" @bind:event="oninput" placeholder="Author Name..." />
+                    </div>
+                </ColumnOptions>
+            </PropertyColumn>
+        <PropertyColumn Property="@(c => c.Occupation)" Sortable="true" />
+        <PropertyColumn Property="@(c => c.Lifespan)" Sortable="true" />
+        <PropertyColumn Property="@(c => c.Country)" Sortable="true" /> 
+        <PropertyColumn Property="@(c => c.BooksAuthored.Count)" Sortable="true" />  
+        </QuickGrid>
+        <Paginator State="@pagination" />
+    </div>
+}
+
+
+
+
+
+
+
+
+
+@code {
+    private EditContext editContext;
+    private Author model;
+    private IQueryable<Author>? authors;
+    private PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+    private string nameSearch;
+
+    public IQueryable<Author>? Authors { get; set; }
+
+    private IQueryable<Author>? FilteredAuthors
+    {
+        get
+        {
+            IQueryable<Author>? filtered = Authors;
+            if (!string.IsNullOrEmpty(nameSearch))
+            {
+                filtered = filtered?.Where(c => c.Name.Contains(nameSearch, StringComparison.CurrentCultureIgnoreCase));
+            }
+            return filtered;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAuthors();
+    }
+
+    private async Task GetAuthors()
+    {
+        Authors = (await AuthorProvider.GetAllAuthorsAsync()).AsQueryable();
+        model = new Author();
+        editContext = new EditContext(model);
+    }
+
+
+
+
+
+
+
+
+
+}
