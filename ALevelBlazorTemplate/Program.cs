@@ -13,6 +13,8 @@ builder.Services.AddScoped<DatabaseSeeder>();
 builder.Services.AddScoped<QuoteProvider>();
 builder.Services.AddScoped<AuthorProvider>();
 builder.Services.AddScoped<BookProvider>();
+builder.Services.AddScoped<HabitProvider>();
+builder.Services.AddScoped<OrderProvider>();
 
 
 
