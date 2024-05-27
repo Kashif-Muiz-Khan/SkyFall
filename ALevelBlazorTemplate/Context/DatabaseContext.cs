@@ -17,12 +17,6 @@ namespace SkyFall.Context
         public DbSet<DailyTask> DailyTasks { get; set; }
         public DbSet<ToDoList> ToDoLists { get; set; }
 
-
-        public DbSet<Habit> Habits { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Order> Orders { get; set; }
-
-
         public DatabaseContext(DbContextOptions<DatabaseContext> options, IWebHostEnvironment environment) : base(options)
         {
             _environment = environment;

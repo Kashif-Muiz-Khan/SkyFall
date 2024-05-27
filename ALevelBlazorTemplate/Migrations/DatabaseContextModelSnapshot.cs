@@ -15,7 +15,7 @@ namespace SkyFall.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -151,16 +151,14 @@ namespace SkyFall.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("BirthDate")
-                        .IsRequired()
+                    b.Property<DateTime>("BirthDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DeathDate")
-                        .IsRequired()
+                    b.Property<DateTime>("DeathDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Lifespan")
@@ -246,75 +244,6 @@ namespace SkyFall.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("DailyTasks");
-                });
-
-            modelBuilder.Entity("SkyFall.Model.Habit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Point")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Habits");
-                });
-
-            modelBuilder.Entity("SkyFall.Model.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("SkyFall.Model.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("HabitId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HabitId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("SkyFall.Model.Quote", b =>
@@ -539,30 +468,6 @@ namespace SkyFall.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SkyFall.Model.Order", b =>
-                {
-                    b.HasOne("SkyFall.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SkyFall.Model.OrderItem", b =>
-                {
-                    b.HasOne("SkyFall.Model.Habit", "Habit")
-                        .WithMany()
-                        .HasForeignKey("HabitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SkyFall.Model.Order", null)
-                        .WithMany("Items")
-                        .HasForeignKey("OrderId");
-
-                    b.Navigation("Habit");
-                });
-
             modelBuilder.Entity("SkyFall.Model.Quote", b =>
                 {
                     b.HasOne("SkyFall.Model.Author", "Author")
@@ -605,11 +510,6 @@ namespace SkyFall.Migrations
                     b.Navigation("BooksAuthored");
 
                     b.Navigation("Quotes");
-                });
-
-            modelBuilder.Entity("SkyFall.Model.Order", b =>
-                {
-                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("SkyFall.Model.User", b =>
